@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 # Copyright (C) 2015  C C Magnus Gustavsson
 # Released under the GNU General Public License
@@ -23,16 +23,16 @@ pygame.mixer.init(sample_rate, -16, 1)  # 16-bit mono
 
 # Assign values between 0.9 and 1.1
 vibrato = []
-for t in xrange(sample_rate):
+for t in range(sample_rate):
     vibrato.append(1.0 + 0.1 * sin(2.0 * pi * t / sample_rate))
 
 # Create tones
 tones = []
 vol = 16.0
-for n in xrange(-12, 20, 2):
+for n in range(-12, 20, 2):
     freq = 440.0 * pow(2.0, (n / 12.0))
     amp = []
-    for t in xrange(sample_rate):
+    for t in range(sample_rate):
         amp.append(vol * sin(2.0 * pi * t / sample_rate * freq * vibrato[t]))
 
     tones.append(pygame.sndarray.make_sound(array(amp, int8)))
@@ -46,8 +46,8 @@ pygame.init()
 def get_hash(data):
     hash = []
     day_of_year = strftime("%j")
-    for byte in md5(str(data) + day_of_year).digest():
-        hash.append(ord(byte))
+    for byte in md5((str(data) + day_of_year).encode()).digest():
+        hash.append(byte)
     return hash
 
 def play_tone(tone):

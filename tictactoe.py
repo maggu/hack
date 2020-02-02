@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 # Copyright (C) 2019  C C Magnus Gustavsson
 # Released under the GNU General Public License
@@ -35,8 +35,8 @@ INFO = pygame.display.Info()
 WIDTH, HEIGHT = INFO.current_w, INFO.current_h
 SIZE = min(WIDTH, HEIGHT)
 
-START_X = (WIDTH - SIZE) / 2
-START_Y = (HEIGHT - SIZE) / 2
+START_X = (WIDTH - SIZE) // 2
+START_Y = (HEIGHT - SIZE) // 2
 
 SQUARE_SIZE = SIZE // 3
 SYMBOL_SIZE = SIZE // 10
@@ -61,11 +61,12 @@ LARGE_FONT = pygame.font.Font(FONT, SIZE // 16)
 SMALL_FONT = pygame.font.Font(FONT, SIZE // 32)
 
 # X and O shapes
-X_INNER = LINE_SIZE / sqrt(2)
-X_OUTER = (SYMBOL_SIZE - LINE_SIZE / 2) / sqrt(2)
+X_INNER = LINE_SIZE // sqrt(2)
+X_OUTER = (SYMBOL_SIZE - LINE_SIZE / 2) // sqrt(2)
 
 O_INNER = SYMBOL_SIZE - LINE_SIZE
 O_OUTER = SYMBOL_SIZE
+
 
 # Grid coordinates for the squares
 POSITION_X = [0, 1, 2, 0, 1, 2, 0, 1, 2]
@@ -128,8 +129,8 @@ def player_select():
     """Select which player is to be played by the computer"""
     SCREEN.fill(GREEN)
     is_computer = [None, None]
-    for player in xrange(2):
-        for line in xrange(3):
+    for player in range(2):
+        for line in range(3):
             draw_menuitem(player, line)
         pygame.display.flip()
         while True:
@@ -156,10 +157,10 @@ def draw_grid():
     SCREEN.fill(GREEN)
     end_x = START_X + SIZE
     end_y = START_Y + SIZE
-    for i in xrange(0, SIZE, SQUARE_SIZE):
+    for i in range(0, SIZE, SQUARE_SIZE):
         draw_line((START_X + i, START_Y), (START_X + i, end_y))
         draw_line((START_X, START_Y + i), (end_x, START_Y + i))
-    for i in xrange(9):
+    for i in range(9):
         text = LARGE_FONT.render(str(i + 1), True, WHITE, GREEN)
         rect = text.get_rect()
         rect.center = get_position(i)
@@ -199,7 +200,7 @@ def draw_mark(player, square, color=WHITE, flip=True):
 
 def square_to_coord(start, position):
     """Convert position to screen coordinates"""
-    return start + position * SQUARE_SIZE + SQUARE_SIZE / 2
+    return start + position * SQUARE_SIZE + SQUARE_SIZE // 2
 
 def get_position(number):
     """Get screen coordinates for a square"""
@@ -234,7 +235,7 @@ def computer_select(player, counts, state):
 
 def game_over(state, keep_color):
     """Paint non-winning squares black"""
-    for square in [s for s in xrange(9) if not s in keep_color]:
+    for square in [s for s in range(9) if not s in keep_color]:
         draw_mark(state[square], square, color=BLACK, flip=False)
     pygame.display.flip()
     get_key(any_key=True)
